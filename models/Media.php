@@ -13,8 +13,10 @@ class Media extends Model{
     }
     public function get_list($filters){
         $programs=(new \yii\db\Query())
-            ->select('tensyn_name')
-            ->from('media_program');
+            ->select('t.tensyn_name')
+            ->from('media_program m')
+            ->innerJoin('tensyn_program_name t','m.platform=t.platform and m.program_default_name=t.program_default_name ')
+        ;
         $programs=$this->_make_sql_where($programs,$filters);
         $programs=$programs->groupBy("tensyn_name")->all();
 
@@ -23,7 +25,7 @@ class Media extends Model{
     public function get_list_default_name($tensyn_name){
         return (new \yii\db\Query())
             ->select('program_default_name')
-            ->from('media_program')
+            ->from('tensyn_program_name')
             ->where(["tensyn_name"=>$tensyn_name])
             ->all();
     }
