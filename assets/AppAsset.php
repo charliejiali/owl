@@ -20,12 +20,24 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'css/style.css',
     ];
     public $js = [
+        "js/libs/jquery-1.10.2.min.js",
+        "js/libs/modernizr-custom.js",
+        "js/libs/jquery.magnific-popup.min.js",
+        "js/libs/jquery.lazyload.min.js",
+        "js/libs/selectbox-min.js",
+        "js/bdq_validator.js",
+        "js/bdp_common.js",
+        "js/bdp_basic.js",
+        "js/bdp_app.js",
+        "js/libs/jquery.bubble-slider.js",
+        "js/libs/jquery.mCustomScrollbar.concat.min.js"
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
+    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 }
