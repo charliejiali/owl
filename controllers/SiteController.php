@@ -1,128 +1,70 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use app\models\User;
 
-class SiteController extends Controller
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+class SiteController extends UserAuthController{
+    public $pageTitle="";
+    public $pageNavId=0;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
-
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
+    public function actionIndex(){
         return $this->render('index');
     }
+    public function actionMode(){
+        return $this->render('mode');
+    }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+    public function actionLogin(){
+        $get = Yii::$app->request->get();
+        $email = $get["email"];
+        $password = $get["password"];
+        $remember = $get["auto_login"];
+
+        $class_user = new User;
+        $login = $class_user->login($email, $password, $remember);
+        if($login===1){
+            $r=1;
+            $msg="success";
+        }else if($login===-1){
+            $r=-1;
+            $msg="itensyn";
+        }else{
+            $r=0;
+            $msg=$login;
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
+        return json_encode([
+            "r"=>$r,
+            "msg"=>$msg,
         ]);
     }
+    public function actionItensynLogin(){
+        $get=Yii::$app->request->get();
+        $user_id=$get["user_id"];
+        $token=$get["token"];
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
+        $class_user=new User;
+        $login=$class_user->itensyn_login($user_id,$token);
+        if($login===1){
+            $r=1;
+            $msg="success";
+        }else{
+            $r=0;
+            $msg=$login;
         }
-        return $this->render('contact', [
-            'model' => $model,
+        return json_encode([
+            "r"=>$r,
+            "msg"=>$msg
         ]);
     }
+    public function actionLogout(){
+        $r=0;
+        $msg="";
+        $class_user=new User;
+        $class_user->logout();
+    }
+    public function actionChangePassword(){
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }
