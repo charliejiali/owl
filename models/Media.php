@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 
 class Media extends Model{
@@ -62,9 +63,10 @@ class Media extends Model{
     public function get_program($platform_name,$tensyn_name){
         $programs=(new \yii\db\Query())
             ->select('*')
-            ->from('media_program')
-            ->where(["tensyn_name"=>$tensyn_name])
-            ->orderBy('program_id')
+            ->from('media_program m')
+            ->innerJoin('tensyn_program_name t','m.platform=t.platform and m.program_default_name=t.program_default_name ')
+            ->where(["t.tensyn_name"=>$tensyn_name])
+            ->orderBy('m.program_id')
             ->all();
         if(!$programs){return false;}
 
@@ -123,7 +125,8 @@ class Media extends Model{
             $attachs=(new \yii\db\Query())
                 ->select('*')
                 ->from('tensyn_attach')
-                ->where(["program_id"=>$program_id])
+//                ->where(["program_id"=>$program_id])
+                ->where(["program_default_name"=>$program_default_name,"platform"=>$platform])
                 ->all();
             if($attachs){
                 foreach($attachs as $a){
@@ -150,13 +153,14 @@ class Media extends Model{
         $attachs=(new \yii\db\Query())
             ->select("*")
             ->from("media_attach")
-            ->where(["program_id"=>$target_id])
+//            ->where(["program_id"=>$target_id])
+            ->where(["program_default_name"=>$program_default_name,"platform"=>$platform])
             ->all();
         foreach($attachs as $a){
             if($a["type"]=="poster"){
-                $poster=$a["url"];
+                $poster=Yii::getAlias('@upload').$a["url"];
             }else{
-                $attach[$a["type"]]["url"]=$a["url"];
+                $attach[$a["type"]]["url"]=Yii::getAlias('@upload').$a["url"];
             }
         }
 
