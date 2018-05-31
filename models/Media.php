@@ -97,7 +97,7 @@ class Media extends Model{
             if($user){
                 $media[]=array(
                     "name"=>$user["company_name"],
-                    "url"=>$user["url"],
+                    "url"=>"../".$user["url"],
                     "id"=>$user["user_id"]
                 );
             }
