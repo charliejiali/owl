@@ -3,17 +3,18 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\db\Query;
 
 class Media extends Model{
     public function get_program_intro($program_default_name,$platform){
-        return (new \yii\db\Query())
+        return (new Query)
             ->select('intro')
             ->from('media_program')
             ->where(["program_default_name"=>$program_default_name,"platform"=>$platform])
             ->one();
     }
     public function get_list($filters){
-        $programs=(new \yii\db\Query())
+        $programs=(new Query)
             ->select('t.tensyn_name')
             ->from('media_program m')
             ->innerJoin('tensyn_program_name t','m.platform=t.platform and m.program_default_name=t.program_default_name ')
@@ -24,14 +25,14 @@ class Media extends Model{
         return $programs;
     }
     public function get_list_default_name($tensyn_name){
-        return (new \yii\db\Query())
+        return (new Query)
             ->select('program_default_name')
             ->from('tensyn_program_name')
             ->where(["tensyn_name"=>$tensyn_name])
             ->all();
     }
     public function get_poster_url($program_default_names){
-        return (new \yii\db\Query())
+        return (new Query)
             ->select('url')
             ->from('media_attach')
             ->where(["in","program_default_name",$program_default_names])
@@ -61,7 +62,7 @@ class Media extends Model{
     }
 
     public function get_program($platform_name,$tensyn_name){
-        $programs=(new \yii\db\Query())
+        $programs=(new Query)
             ->select('*')
             ->from('media_program m')
             ->innerJoin('tensyn_program_name t','m.platform=t.platform and m.program_default_name=t.program_default_name ')
@@ -87,7 +88,7 @@ class Media extends Model{
                 }
             }
 
-            $user=(new \yii\db\Query())
+            $user=(new Query)
                 ->select("u.user_id,u.company_name,l.url")
                 ->from("media_user as u")
                 ->innerJoin("media_logo as l","u.company_name=l.company_name")
@@ -115,14 +116,14 @@ class Media extends Model{
         $program_default_name=$data["program_default_name"];
         $platform=$data["platform"];
 
-        $program=(new \yii\db\Query())
+        $program=(new Query)
             ->select('*')
             ->from('tensyn_program')
             ->where(["program_default_name"=>$program_default_name,"platform"=>$platform])
             ->one();
         if($program){
             $program_id=$program["program_id"];
-            $attachs=(new \yii\db\Query())
+            $attachs=(new Query)
                 ->select('*')
                 ->from('tensyn_attach')
 //                ->where(["program_id"=>$program_id])
@@ -141,7 +142,7 @@ class Media extends Model{
                 }
             }
         }
-        $program=(new \yii\db\Query())
+        $program=(new Query)
             ->select("*")
             ->from("program")
             ->where(["program_default_name"=>$program_default_name,"platform_name"=>$platform])
@@ -150,7 +151,7 @@ class Media extends Model{
             $attach["evaluation"]["url"]="/program/result?program_id=".$program["program_id"]."&mode_type=1";
         }
 
-        $attachs=(new \yii\db\Query())
+        $attachs=(new Query)
             ->select("*")
             ->from("media_attach")
 //            ->where(["program_id"=>$target_id])
