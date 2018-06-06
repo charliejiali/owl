@@ -39,7 +39,7 @@ class DetailController extends UserAuthController
     }
     public static function actionGetList()
     {
-        $data=[];
+        $data=array();
         $get=Yii::$app->request->get();
         $class_media=new Media;
         $programs=$class_media->get_list($get);
