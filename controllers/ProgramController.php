@@ -2,7 +2,9 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\{Program,System,Media};
+use app\models\Program;
+use app\models\System;
+use app\models\Media;
 use app\models\Match;
 
 class ProgramController extends UserAuthController{
@@ -21,7 +23,7 @@ class ProgramController extends UserAuthController{
         $class_system=new System;
         $class_program=new Program;
 
-        $weights=[];
+        $weights=array();
         $check=false;
         $get=Yii::$app->request->get();
         $program_ids=$get["ids"];
@@ -56,9 +58,9 @@ class ProgramController extends UserAuthController{
         $class_system=new System;
         $class_program=new Program;
 
-        $data=[];
-        $system_weights=[];
-        $match_weights=[];
+        $data=array();
+        $system_weights=array();
+        $match_weights=array();
 
         $get=Yii::$app->request->get();
 
