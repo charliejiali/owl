@@ -2,7 +2,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\{Media,System};
+use app\models\Media;
+use app\models\System;
 
 class DetailController extends UserAuthController
 {
