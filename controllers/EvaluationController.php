@@ -2,7 +2,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\{Program,System};
+use app\models\Program;
+use app\models\System;
 use app\models\Score;
 
 class EvaluationController extends UserAuthController{
@@ -14,7 +15,7 @@ class EvaluationController extends UserAuthController{
     public function actionMain(){
         $class_system=new System;
         $get=Yii::$app->request->get();
-        $program_id=$get["program_id"]??"";
+        $program_id=isset($get["program_id"])?$get["program_id"]:"";
         $platforms=$class_system->get_platforms();
         $properties=$class_system->get_properties();
         $types=$class_system->get_types();
