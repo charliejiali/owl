@@ -1,7 +1,9 @@
 <?php
 namespace app\controllers;
 
-use app\models\{Program,Media,System};
+use app\models\Program;
+use app\models\Media;
+use app\models\System;
 use Yii;
 use app\models\Match;
 
@@ -26,7 +28,7 @@ class RecommendController extends UserAuthController{
             }
         }
 
-        $program_id=$get["program_id"]??"";
+        $program_id=isset($get["program_Id"])?$get["program_id"]:"";
         $platforms=$class_system->get_platforms();
         $properties=$class_system->get_properties();
         $types=$class_system->get_types();
