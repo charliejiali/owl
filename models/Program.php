@@ -3,7 +3,13 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use app\models\{Rookie1,Rookie2,Iteration1,Iteration2,Score,Match};
+use app\models\Rookie1;
+use app\models\Rookie2;
+use app\models\Iteration1;
+use app\models\Iteration2;
+use app\models\Score;
+use app\models\Match;
+use yii\db\Query;
 
 class Program extends ActiveRecord{
     private $class_match;
@@ -184,7 +190,7 @@ class Program extends ActiveRecord{
             ->asArray()->all();
     }
     public function get_poster_src($program_default_name,$platform){
-        $r=(new \yii\db\Query)
+        $r=(new Query)
             ->select('*')
             ->from('media_attach')
             ->where(["program_default_name"=>$program_default_name,"platform"=>$platform,"type"=>"poster"])
