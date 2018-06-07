@@ -2,8 +2,11 @@
 namespace app\models;
 
 use yii\base\Model;
-use app\models\{Rookie1,Rookie2,Iteration1,Iteration2,Score};
-//use frontend\models\Program;
+use app\models\Rookie1;
+use app\models\Rookie2;
+use app\models\Iteration1;
+use app\models\Iteration2;
+use app\models\Score;
 
 class Top10 extends Model{
 	private $type=array(
