@@ -2,6 +2,7 @@
 namespace app\models;
 
 use yii\base\Model;
+use yii\db\Query;
 
 class System extends Model{
     private $system_weights=array(
@@ -12,14 +13,14 @@ class System extends Model{
         return $this->system_weights;
     }
     public function get_platforms(){
-        return (new \yii\db\Query)
+        return (new Query)
             ->select('platform_name')
             ->from('program')
             ->where(['and','platform_name!=-1',"platform_name!=''"])
             ->groupBy("platform_name")->all();
     }
     public function get_properties(){
-        return (new \yii\db\Query)
+        return (new Query)
             ->select('property_name')
             ->from('program')
             ->where(['and','property_name!=-1',"property_name!=''"])
@@ -29,7 +30,7 @@ class System extends Model{
         $type1=array();
         $type2=array();
 
-        $results=(new \yii\db\Query)
+        $results=(new Query)
             ->select('type_name')
             ->from('program')
             ->where(['and','type_name!=-1',"type_name!=''"])
@@ -58,7 +59,7 @@ class System extends Model{
         $exists=array();
         $data=array();
 
-        $results=(new \yii\db\Query)
+        $results=(new Query)
             ->select('start_play')
             ->from('program')
             ->where(['and','start_play!=-1',"start_play!=''"])
@@ -81,7 +82,7 @@ class System extends Model{
         return $data;
     }
     public function get_default_weights($mode_type){
-        return (new \yii\db\Query)
+        return (new Query)
             ->select("*")
             ->from("system_weight")
             ->where(["type"=>$mode_type])
