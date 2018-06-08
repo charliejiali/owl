@@ -243,7 +243,8 @@ var __BDP_API = {
         //location.href = __BDP.URL_BASE + "forgot_password.php?urlref=" + encodeURIComponent(location.href);
         $.magnificPopup.open({
             items: {
-                src: __BDP.URL_BASE + 'module/popup/pwd_change.php'
+                //src: __BDP.URL_BASE + 'module/popup/pwd_change.php'
+                src:'/site/change-password'
             },
             mainClass: 'mfp-fade',
             type: 'ajax',
