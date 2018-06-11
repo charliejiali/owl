@@ -11,7 +11,7 @@ class UserAuthController extends Controller{
         'site/login'
     ];
     public $user_name;
-    public $user_id1;
+    public $user_id;
 
     function init()
     {
