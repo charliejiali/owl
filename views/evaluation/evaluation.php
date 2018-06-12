@@ -6,6 +6,7 @@ $select_platforms = $platforms;
 $select_properties = $properties;
 $select_types = $types;
 $select_times = $times;
+//
 ?>
 <?= $this->render('../module/head_tag'); ?>
 <div class="wrap">
