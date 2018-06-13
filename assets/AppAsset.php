@@ -34,7 +34,8 @@ class AppAsset extends AssetBundle
         "js/bdp_app.js",
         "js/libs/jquery.bubble-slider.js",
         "js/libs/jquery.mCustomScrollbar.concat.min.js",
-//        "js/pages/change_password.js"
+        "js/vue.min.js",
+        "js/axios.min.js"
     ];
     public $depends = [
 //        'yii\web\YiiAsset',
