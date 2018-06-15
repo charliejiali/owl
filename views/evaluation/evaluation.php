@@ -2,8 +2,8 @@
 $this->registerJs(" var program_id='".$program_id."';",\yii\web\View::POS_HEAD);
 $this->registerJsFile("/js/pages/evaluate.js");
 
-$select_platforms = $platforms;
-$select_properties = $properties;
+//$select_platforms = $platforms;
+//$select_properties = $properties;
 $select_types = $types;
 $select_times = $times;
 ?>
@@ -28,47 +28,44 @@ $select_times = $times;
                 </div>
             </div>
             <br class="clear">
-            <div class="form-eval">
+            <div class="form-eval" id="filters">
                 <div class="filter-box">
                     <label>媒体平台：</label>
-                    <div class="filter-group" id="select_platform">
-                        <?php foreach ($select_platforms as $platform) { ?>
-                            <div class="filter-item" value="<?php echo $platform["platform_name"]; ?>"><?php echo $platform["platform_name"]; ?></div>
-                        <?php } ?>
+                    <template>
+                    <div class="filter-group" >
+                        <div class="filter-item" v-for="platform in platforms" v-bind:value="platform.platform_name">{{platform.platform_name}}</div>
                     </div>
+                    </template>
                 </div>
                 <div class="filter-box">
                     <label>内容属性：</label>
-                    <div class="filter-group" id="select_property">
-                        <?php foreach ($select_properties as $property) { ?>
-                            <div class="filter-item" value="<?php echo $property["property_name"]; ?>"><?php echo $property["property_name"]; ?></div>
-                        <?php } ?>
+                    <template>
+                    <div class="filter-group">
+                        <div class="filter-item" v-for="property in properties" v-bind:value="property.property_name">{{property.property_name}}</div>
                     </div>
+                    </template>
                 </div>
-                <div class="filter-box">
+                <div class="filter-box" v-bind:class="{open:filter_open.type1}">
                     <label>一级类型：</label>
-                    <a href="#" class="filter-item-more">更多</a>
-                    <div class="filter-group" id="select_type">
-                        <?php foreach ($select_types["type1"] as $type) { ?>
-                            <div class="filter-item" value="<?php echo $type; ?>"><?php echo $type; ?></div>
-                        <?php } ?>
+                    <a href="javascript:;" @click="open_filter_box('type1')" class="filter-item-more">更多</a>
+                    <template>
+                    <div class="filter-group">
+                        <div class="filter-item" v-for="type in type1" v-bind:value="type">{{type}}</div>
                     </div>
+                    </template>
                 </div>
-                <div class="filter-box">
+                <div class="filter-box" v-bind:class="{open:filter_open.type2}">
                     <label>二级类型：</label>
-                    <a href="#" class="filter-item-more">更多</span></a>
-                    <div class="filter-group" id="select_type2">
-                        <?php foreach ($select_types["type2"] as $type) { ?>
-                            <div class="filter-item" value="<?php echo $type; ?>"><?php echo $type; ?></div>
-                        <?php } ?>
+                    <a href="javascript:;" @click="open_filter_box('type2')" class="filter-item-more">更多</a>
+                    <div class="filter-group">
+                        <div class="filter-item" v-for="type in type2" v-bind:value="type">{{type}}</div>
                     </div>
                 </div>
-                <div class="filter-box">
-                    <label>开播时间：</label> <a href="#" class="filter-item-more">更多</a>
-                    <div class="filter-group" id="select_time">
-                        <?php foreach ($select_times as $time) { ?>
-                            <div class="filter-item" value="<?php echo $time["start_play"]; ?>"><?php echo $time["start_play"]; ?></div>
-                        <?php } ?>
+                <div class="filter-box" v-bind:class="{open:filter_open.time}">
+                    <label>开播时间：</label>
+                    <a href="javascript:;" @click="open_filter_box('time')" class="filter-item-more">更多</a>
+                    <div class="filter-group">
+                        <div class="filter-item" v-for="time in times" v-bind:value="time.start_play">{{time.start_play}}</div>
                     </div>
                 </div>
                 <div class="text-center">
