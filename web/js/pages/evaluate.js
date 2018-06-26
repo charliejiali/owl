@@ -5,7 +5,6 @@
 var url=new URL(window.location.toString());
 var compare_ids=url.searchParams.get('program_id');
 compare_ids=compare_ids!==null?compare_ids.split(','):[];
-console.log(compare_ids)
 
 var filter_data={
     platforms:[],
@@ -37,16 +36,16 @@ var list_data={
     selected:{}
 };
 var top_data={
-    top10:compare_ids===null?true:false,
+    top10:compare_ids.length>0?false:true,
     top20:false,
-    topall:compare_ids===null?false:true,
+    topall:compare_ids.length>0?true:false,
 }
 var sort_data={
     score:true,
     time:false,
 };
 var params={
-    top:compare_ids===null?"10":"",
+    top:compare_ids.length>0?"":"10",
     sort:"score",
     filters: {
         program_name:"",
