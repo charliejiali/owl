@@ -1,11 +1,5 @@
 <?php
-$this->registerJs(" var program_id='".$program_id."';",\yii\web\View::POS_HEAD);
 $this->registerJsFile("/js/pages/evaluate.js");
-
-//$select_platforms = $platforms;
-//$select_properties = $properties;
-$select_types = $types;
-$select_times = $times;
 ?>
 <?= $this->render('../module/head_tag'); ?>
 <div class="wrap">
