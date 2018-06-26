@@ -41,8 +41,21 @@ class EvaluationController extends UserAuthController{
 
         $get=Yii::$app->request->get();
         $top=$get["top"];
+
+        switch($top){
+            case "top10":
+                $top=10;
+                break;
+            case "top20":
+                $top=20;
+                break;
+            case "topall":
+                $top="";
+                break;
+        }
+
         $sort=$get["sort"];
-        $filters=$get["filters"];
+        $filters=json_decode($get["filters"],true);
 
         $programs=$class_program->get_list($filters);
         $system_weights=$class_system->get_default_weights($this->mode_type);
@@ -62,6 +75,8 @@ class EvaluationController extends UserAuthController{
             );
             $program_score[]=$program["score"];
             $time[]=$program["start_play"];
+
+            $select[$program["program_id"]]=array("program_name"=>$program["program_name"],"check"=>false);
         }
         if(trim($top)!==""){
             array_multisort($program_score,SORT_DESC,$data);
@@ -83,7 +98,7 @@ class EvaluationController extends UserAuthController{
         }
         return json_encode([
             "data"=>$data,
-            "total"=>count($data)
+            "total"=>count($data),
         ]);
     }
     public function actionGetRecommendPrograms(){
@@ -114,5 +129,20 @@ class EvaluationController extends UserAuthController{
             }
         }
         return json_encode($data);
+    }
+    public function actionGetFilters(){
+        $class_system=new System;
+
+        $platforms=$class_system->get_platforms();
+        $properties=$class_system->get_properties();
+        $types=$class_system->get_types();
+        $times=$class_system->get_times();
+
+        echo json_encode(array(
+            "platforms"=>$platforms,
+            "properties"=>$properties,
+            "types"=>$types,
+            "times"=>$times
+        ));
     }
 }
