@@ -66,7 +66,7 @@ class Program extends ActiveRecord{
         $data["tensyn_name"]=$program["tensyn_name"];
         return $data;
     }
-    public function get_list($filters=[]){
+    public function get_list($filters=array()){
         $programs=Program::find()
             ->select("*")
             ->leftJoin("score s","program.program_id=s.program_id");
