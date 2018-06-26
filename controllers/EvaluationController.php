@@ -13,23 +13,7 @@ class EvaluationController extends UserAuthController{
     private $recommend_score_offset=0.3;
 
     public function actionMain(){
-        $class_system=new System;
-        $get=Yii::$app->request->get();
-        $program_id=isset($get["program_id"])?$get["program_id"]:"";
-        $platforms=$class_system->get_platforms();
-        $properties=$class_system->get_properties();
-        $types=$class_system->get_types();
-        $times=$class_system->get_times();
-
-        return $this->render('evaluation',[
-            "pageTitle"=>$this->pageTitle,
-            "pageNavId"=>$this->pageNavId,
-            "program_id"=>$program_id,
-            'platforms'=>$platforms,
-            'properties'=>$properties,
-            'types'=>$types,
-            'times'=>$times,
-        ]);
+        return $this->render('evaluation');
     }
     public function actionList(){
         $class_program=new Program;
