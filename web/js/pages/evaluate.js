@@ -1,370 +1,11 @@
 /**
  * Created by zhangjiali on 2018/6/15.
  */
-var win = {};
 
-//$(document).ready(function () {
-//    var selectResultArr = [];
-//    var mode_type=1;
-//
-//    onResize();
-//    $(window).bind('resize', onResize);
-//
-//    function onResize() {
-//        win.w = $(window).width();
-//        win.h = $(window).height();
-//    }
-//
-//
-//    $(".result-list").mCustomScrollbar({
-//        axis: "y",
-//        theme: "dark"
-//    });
-//
-//
-//    // 权重radio
-//    $("#controlBox").on("click", '.control-label', function (e) {
-//        e.preventDefault();
-//        if (!$(this).parent().hasClass("disabled")) {
-//            if ($(this).hasClass("active")) {
-//                $(this).removeClass("active");
-//                var box=$(this).parent().find('.control-slider');
-//                var name=box.find('input').attr('name');
-//                box.empty();
-//                box.append('<input class="bubble-slider" name="' + name + '" placeholder="0 - 100" type="number" min="0" max="100" value="0">');
-//                box.find('input[name="'+name+'"]').bubbleSlider();
-//            } else {
-//                $(this).addClass("active");
-//            }
-//            checkControlNum();
-//        }
-//    });
-//
-//    // 权重滚动条
-//    $("#controlBox").on("mouseup click", '.control-slider', function (e) {
-//        checkControlNum();
-//    });
-//    $('body').not('.control-slider').on('mouseup', function () {
-//        checkControlNum();
-//    })
-//
-//    $("#resultList").on("click",'.list-item', function (e) {
-//        e.preventDefault();
-//        if($(e.target).hasClass('item-more')){return false;}
-//
-//        var id=$(this).attr('data-id');
-//
-//        if ($(this).hasClass("active")) {
-//            if(program_id!=''&&id==program_id){return false;}
-//            $(this).removeClass("active");
-//            del_tag(id);
-//        } else {
-//            if (selectResultArr.length >= 3) {
-//                return;
-//            }
-//            $(this).addClass("active");
-//            add_tag(id,$(this).find('td .title').text());
-//        }
-//        $('#weights').empty();
-//        $('#controlBox').hide();
-//    });
-//
-//    function add_tag(id,name){
-//        selectResultArr.push(id);
-//        $("#resultTags").append('<span class="result-tag" data-id="' + id + '">' + name + '<a href="#" class="ico-close"></a></span>');
-//    }
-//    function del_tag(id){
-//        del_id(selectResultArr,id);
-//        $('#resultTags span[data-id="'+id+'"]').remove();
-//    }
-//    function del_id(arr, val) {
-//      for(var i=0; i<arr.length; i++) {
-//        if(arr[i] == val) {
-//          arr.splice(i, 1);
-//          break;
-//        }
-//      }
-//    }
-//
-//    $("#resultList .item-more").on("click", function (e) {
-//        e.preventDefault();
-//        e.stopPropagation();
-//    });
-//
-//
-//    $("#resultTags").on("click", ".ico-close", function (e) {
-//        e.preventDefault();
-//
-//        var curTagID = $(this).parent(".result-tag").data("id");
-//        // var tagIndex = $.inArray(curTagID, selectResultArr);
-//
-//        del_tag(curTagID);
-//        $("#resultList .list-item").each(function (i, j) {
-//            if ($(this).hasClass("active") && $(this).data("id") == curTagID) {
-//                // if(program_id!=''&&curTagID==program_id){return false;}
-//                $(this).removeClass("active");
-//            }
-//        });
-//        $('#weights').empty();
-//        $('#controlBox').hide();
-//
-//        console.log(selectResultArr)
-//    });
-//
-//
-//    $(".film-box-re .btn-compare").on("click", function (e) {
-//        e.preventDefault();
-//        var $filmBox = $(this).parents(".film-box-re");
-//        if (!$filmBox.hasClass("color-cancel")) {
-//            $filmBox.addClass("color-cancel");
-//            $(this).text("恢复对比");
-//        } else {
-//            $filmBox.removeClass("color-cancel");
-//            $(this).text("取消对比");
-//        }
-//    });
-//
-//
-//    $("button[name='btn_search']").on("click", function (e) {
-//        e.preventDefault();
-//        getFilterData();
-//        get_program_list();
-//    });
-//
-//    $(".pure-btn-group .pure-btn").on("click", function (e) {
-//        e.preventDefault();
-//        $(this).siblings().removeClass("pure-btn-active");
-//        $(this).addClass("pure-btn-active");
-//
-//        setResultList();
-//        get_program_list();
-//    });
-//
-//    //设置过滤参数
-//    function getFilterData() {
-//        var select_platform = getFilterItem("select_platform");
-//        var select_property = getFilterItem("select_property");
-//        var select_type = getFilterItem("select_type");
-//        var select_type2 = getFilterItem("select_type2");
-//        var select_time = getFilterItem("select_time");
-//        var select_score = getFilterItem("select_score");
-//        console.log("=============过滤参数==============");
-//        console.log("播出平台：", select_platform);
-//        console.log("内容属性：", select_property);
-//        console.log("一级类型：", select_type);
-//        console.log("二级类型：", select_type2);
-//        console.log("开播时间：", select_time);
-//        console.log("得分：", select_score);
-//        console.log("============== END =============");
-//    }
-//
-//    function getFilterItem(id) {
-//        var valueArr = [];
-//        $("#" + id).find(".filter-item.on").each(function (i, e) {
-//            valueArr.push($(this).attr("value"));
-//        });
-//        return valueArr.join(",")
-//    }
-//
-//
-//    //设置输出结果
-//    function setResultList() {
-//
-//        var listNum = getGroupVal("listNum");
-//        var listOrder = getGroupVal("listOrder");
-//
-//        console.log("输出结果设置：", listNum, listOrder);
-//
-//    }
-//
-//    function getGroupVal(id) {
-//        return $("#" + id).find(".pure-btn-active").attr("value");
-//    }
-//
-//    $('#table_body').on('click','.item-more', function (e) {
-//        e.preventDefault();
-//
-//        $.get('/program/get-intro',{
-//            program_id:$(this).attr('data-id')
-//        },function(json){
-//            __BDP.alertBox("内容简介", json.msg);
-//        },'json');
-//    });
-//
-//
-//    $("#searchType .control-label").on("click", function (e) {
-//        e.preventDefault();
-//        $(this).siblings().removeClass("active");
-//        $(this).addClass("active");
-//    });
-//
-//    var compare_id=[];
-//    if(program_id!=''){
-//        compare_id=program_id.split(',');
-//        $('#listNum').find('button.pure-btn-active').removeClass('pure-btn-active');
-//        $('#listNum').find('button[value=""]').addClass('pure-btn-active');
-//    }
-//
-//    get_program_list();
-//
-//    $('#search_value').on('keypress',function(e){
-//        if(e.keyCode==13){
-//            get_program_list();
-//        }
-//    });
-//
-//    function get_program_list(){
-//        var filters={};
-//
-//        if($('#searchType').find('div.active').attr('value')=="program_name"){
-//            filters.program_name=$('#search_value').val();
-//        }else{
-//            filters.type_name=$('#search_value').val();
-//        }
-//
-//        filters.platform_name = getFilterItem("select_platform");
-//        filters.property_name = getFilterItem("select_property");
-//        filters.type1 = getFilterItem("select_type");
-//        filters.type2 = getFilterItem("select_type2");
-//        filters.start_play = getFilterItem("select_time");
-//
-//        $.get('/evaluation/list',{
-//            top:getGroupVal("listNum"),
-//            sort:getGroupVal("listOrder"),
-//            filters:filters
-//        },function(json){
-//            make_program_list(json.data);
-//
-//            if(compare_id.length>0){
-//                for(var i in compare_id){
-//                    $('#table_body tr[data-id="' + compare_id[i] + '"]').trigger('click');
-//                }
-//                compare_id=[];
-//            }
-//
-//            $('#resultTags .result-tag').each(function(){
-//                var id=$(this).attr('data-id');
-//                if(!$('#table_body tr[data-id="'+id+'"]').hasClass('active')){
-//                    $('#table_body tr[data-id="'+id+'"]').addClass('active');
-//                }
-//            });
-//
-//        },'json');
-//    }
-//
-//    function make_program_list(data){
-//        $('#table_body').empty();
-//
-//        if(data.length==0){
-//            $('#no-result').show();
-//            $('#has-result').hide();
-//        }else{
-//            $('#has-result').show();
-//            $('#no-result').hide();
-//            for(var i in data){
-//                var d=data[i];
-//                $('#table_body').append(
-//                    '<tr class="list-item" data-id="'+d.program_id+'">'
-//                    +    '<td>'+(parseInt(i)+1)+'、《<span class="title">'+d.program_name+'</span>》</td>'
-//                    +    '<td>'+d.platform_name+'</td>'
-//                    +    '<td>总评得分：'+d.program_score+'</td>'
-//                    +    '<td>'+d.time+'</td>'
-//                    +    '<td><a href="#" class="item-more" data-id="'+d.program_id+'">内容简介</a></td>'
-//                    +'</tr>'
-//                );
-//            }
-//        }
-//    }
-//    $('#btn_weights').on('click',function(){
-//        $('#weights').empty();
-//        $.get('/program/get-weights',{
-//            mode_type:mode_type,
-//            ids: selectResultArr.join(',')
-//        }, function (json) {
-//            if (!$.isEmptyObject(json)) {
-//
-//                $('#controlBox').show();
-//
-//                make_regular_row(json);
-//
-//                $('#weights').append(
-//                    '<div class="pure-u-1-4">'
-//                    + '<div class="txt-comment">'
-//                    + '<br> &nbsp; 提示：权重总和只限100%'
-//                    + '</div>'
-//                    + '</div>'
-//                );
-//
-//                $('input.bubble-slider').not('.no-use').each(function () {
-//                    $(this).bubbleSlider();
-//                });
-//                $('input.bubble-slider.no-use').each(function () {
-//                    $(this).bubbleSlider({
-//                        toggleBubble: false,
-//                        thumbScale: 0
-//                    });
-//                });
-//
-//                checkControlNum();
-//
-//                $('div.bubble-slider-wrap[style*="margin"]').each(function () {
-//                    $(this).attr('style', '');
-//                })
-//            } else {
-//                $('#controlBox').hide();
-//                __BDP.alertBox("提示", '未能获取有效的权重');
-//            }
-//        }, 'json');
-//    });
-//    // 正常生成权重
-//    function make_regular_row(json) {
-//        for (var i in json) {
-//            var d = json[i];
-//
-//            var active='active';
-//            var value=d.value;
-//            var disabled='';
-//            var no_use='';
-//
-//            if(value==''){
-//                active='';
-//                disabled='disabled';
-//                value='0';
-//                no_use='no-use';
-//            }
-//
-//            $('#weights').append(
-//                '<div class="pure-u-1-4">'
-//                + '<div class="control-item '+disabled+'">'
-//                + '<div class="control-label '+active+'"><span class="ico-checkbox">' + d.name + '</span></div>'
-//                + '<div class="control-slider">'
-//                + '<input class="bubble-slider '+no_use+'" name="' + d.html_id + '" placeholder="0 - 100" type="number" min="0" max="100" value="' + value + '">'
-//                + '</div>'
-//                + '</div>'
-//                + '</div>'
-//            );
-//        }
-//    }
-//    // 确认
-//    $('#confirm').on('click', function () {
-//        var input={};
-//        input.mode_type=mode_type;
-//        input.program_id = selectResultArr.join(',');
-//
-//        $("#controlBox .control-item").each(function (i, j) {
-//            if ($(this).find(".control-label").eq(0).hasClass("active")) {
-//                input[$(this).find("input.bubble-slider").eq(0).attr('name')] = $(this).find("input.bubble-slider").eq(0).val();
-//            }
-//        });
-//
-//        if(selectResultArr.length===1){
-//            //window.open('program_result.php?'+$.param(input));
-//            window.open('/program/result?'+$.param(input));
-//        }else{
-//            window.open('/program/compare-result?'+$.param(input));
-//        }
-//    });
-//});
+var url=new URL(window.location.toString());
+var compare_ids=url.searchParams.get('program_id');
+compare_ids=compare_ids!==null?compare_ids.split(','):[];
+console.log(compare_ids)
 
 var filter_data={
     platforms:[],
@@ -375,45 +16,373 @@ var filter_data={
     filter_open:{
         type1:false,
         type2:false,
-        time:false
+        times:false
+    },
+    selected:{
+        platforms:{},
+        properties:{},
+        type1:{},
+        type2:{},
+        times:{},
+    },
+    name_type:{
+        program_name:true,
+        type_name:false,
+        value:''
     }
+};
+var list_data={
+    list:[],
+    total:0,
+    selected:{}
+};
+var top_data={
+    top10:compare_ids===null?true:false,
+    top20:false,
+    topall:compare_ids===null?false:true,
 }
-axios.get('/evaluation/get-filters',{params:{}})
-    .then(function(json){
-        var data=json.data;
-
-        filter_data.platforms=data.platforms;
-        filter_data.properties=data.properties;
-        filter_data.type1=data.types.type1;
-        filter_data.type2=data.types.type2;
-        filter_data.times=data.times;
-        //for(var i in platforms){
-        //    filters.platforms.push(platforms[i]);
-        //}
-    });
+var sort_data={
+    score:true,
+    time:false,
+};
+var params={
+    top:compare_ids===null?"10":"",
+    sort:"score",
+    filters: {
+        program_name:"",
+        type_name:"",
+        platform_name: "",
+        property_name: "",
+        type1: "",
+        type2: "",
+        start_play: "",
+    }
+};
 
 document.addEventListener('DOMContentLoaded',function(){
-    window.filters=new Vue({
-        el:"#filters",
-        data:filter_data,
+    onResize();
+    $(window).bind('resize', onResize);
+
+    // 获取标签选项
+    axios.get('/evaluation/get-filters',{params:{}})
+        .then(function(json){
+            var data=json.data;
+            // 初始化标签
+            filter_data.platforms=data.platforms;
+            filter_data.properties=data.properties;
+            filter_data.type1=data.types.type1;
+            filter_data.type2=data.types.type2;
+            filter_data.times=data.times;
+            for(var i in data.platforms){
+                filter_data.selected.platforms[data.platforms[i].platform_name]=false;
+            }
+            for(var i in data.properties){
+                filter_data.selected.properties[data.properties[i].property_name]=false;
+            }
+            for(var i in data.types.type1){
+                filter_data.selected.type1[data.types.type1[i]]=false;
+            }
+            for(var i in data.types.type2){
+                filter_data.selected.type2[data.types.type2[i]]=false;
+            }
+            for(var i in data.times){
+                filter_data.selected.times[data.times[i].start_play]=false;
+            }
+            // 生成标签
+            new Vue({
+                el:"#table_filter",
+                data:filter_data,
+                methods:{
+                    open_box:function(param){
+                        this.filter_open[param]=this.filter_open[param]===false?true:false;
+                    },
+                    select:function(type,name){
+                        this.selected[type][name]=this.selected[type][name]?false:true;
+                    },
+                    select_type:function(name){
+                        if(name=='program_name'){
+                            this.name_type.program_name=true;
+                            this.name_type.type_name=false;
+                        }else{
+                            this.name_type.program_name=false;
+                            this.name_type.type_name=true;
+                        }
+                    },
+                    get_list:function(){
+                        get_program_list();
+                    }
+                }
+            });
+            get_program_list(compare_ids);
+        });
+    // 列表
+    window.table_list=new Vue({
+        el:"#table_list",
+        data:list_data,
+        methods:{
+            intro:function(id){
+                axios.get('/program/get-intro',{params:{
+                    program_id:id
+                }}).then(function(json){
+                    __BDP.alertBox("内容简介", json.data.msg);
+                });
+            },
+            select:function(id,name){
+                $('#weights').empty();
+                $('#controlBox').hide();
+
+                if(!this.selected.hasOwnProperty(id)&&Object.keys(this.selected).length===3){
+                    __BDP.alertBox("提示","最多只能选三个剧目");
+                }else{
+                    if(!this.selected.hasOwnProperty(id)){
+                        Vue.set(this.selected,id,name);
+                    }else{
+                        if(!compare_ids.includes(id)) {
+                            Vue.delete(this.selected, id);
+                        }
+                    }
+                }
+            },
+            delete_tag:function(id){
+                if(!compare_ids.includes(id)) {
+                    $('#weights').empty();
+                    $('#controlBox').hide();
+                    Vue.delete(this.selected, id);
+                }
+            }
+        }
+    });
+    // 排序
+    // top
+    window.table_top=new Vue({
+        el:'#table_top',
+        data:top_data,
+        methods:{
+            get_list:function(top){
+                for(var i in top_data){
+                    top_data[i]=top==i?true:false;
+                }
+                switch(top){
+                    case 'top10':
+                       params.top='10';
+                        break;
+                    case 'top20':
+                        params.top='20';
+                        break;
+                    case 'topall':
+                        params.top='';
+                        break;
+                }
+                get_program_list();
+            }
+        }
+    });
+    // 时间/得分
+    window.table_sort=new Vue({
+        el:"#table_sort",
+        data:sort_data,
+        methods:{
+            get_list:function(sort){
+                for(var i in sort_data){
+                    sort_data[i]=sort==i?true:false;
+                }
+                params.sort=i;
+                get_program_list();
+            }
+        }
+    });
+
+
+    // 剧目列表滚动条
+    $(".result-list").mCustomScrollbar({
+        axis: "y",
+        theme: "dark"
+    });
+    // 获取剧目权重
+    $('#btn_weights').on('click',function(){
+        $('#weights').empty();
+
+        var program_ids=[];
+        for(var i in list_data.selected){
+            program_ids.push(i);
+        }
+        program_ids=program_ids.join(',');
+
+        $.get('/program/get-weights',{
+            mode_type:1,
+            ids: program_ids
+        }, function (json) {
+            if (!$.isEmptyObject(json)) {
+
+                $('#controlBox').show();
+
+                make_regular_row(json);
+
+                $('#weights').append(
+                    '<div class="pure-u-1-4">'
+                    + '<div class="txt-comment">'
+                    + '<br> &nbsp; 提示：权重总和只限100%'
+                    + '</div>'
+                    + '</div>'
+                );
+
+                $('input.bubble-slider').not('.no-use').each(function () {
+                    $(this).bubbleSlider();
+                });
+                $('input.bubble-slider.no-use').each(function () {
+                    $(this).bubbleSlider({
+                        toggleBubble: false,
+                        thumbScale: 0
+                    });
+                });
+
+                checkControlNum();
+
+                $('div.bubble-slider-wrap[style*="margin"]').each(function () {
+                    $(this).attr('style', '');
+                });
+                $('html, body').animate({
+                    scrollTop: $("#controlBox").offset().top
+                }, 500);
+            } else {
+                $('#controlBox').hide();
+                __BDP.alertBox("提示", '未能获取有效的权重');
+            }
+        }, 'json');
+    });
+    // 权重radio
+    $("#controlBox").on("click", '.control-label', function (e) {
+        e.preventDefault();
+        if (!$(this).parent().hasClass("disabled")) {
+            if ($(this).hasClass("active")) {
+                $(this).removeClass("active");
+                var box = $(this).parent().find('.control-slider');
+                var name = box.find('input').attr('name');
+                box.empty();
+                box.append('<input class="bubble-slider" name="' + name + '" placeholder="0 - 100" type="number" min="0" max="100" value="0">');
+                box.find('input[name="' + name + '"]').bubbleSlider();
+            } else {
+                $(this).addClass("active");
+            }
+            checkControlNum();
+        }
+    });
+    // 权重滚动条
+    $("#controlBox").on("mouseup click", '.control-slider', function (e) {
+        checkControlNum();
+    });
+    $('body').not('.control-slider').on('mouseup', function () {
+        checkControlNum();
+    });
+    // 确认
+    $('#confirm').on('click', function () {
+        var program_ids=[];
+        for(var i in list_data.selected){
+            program_ids.push(i);
+        }
+
+        var input={};
+        input.mode_type=1;
+        input.program_id = program_ids.join(',');
+
+        $("#controlBox .control-item").each(function (i, j) {
+            if ($(this).find(".control-label").eq(0).hasClass("active")) {
+                input[$(this).find("input.bubble-slider").eq(0).attr('name')] = $(this).find("input.bubble-slider").eq(0).val();
+            }
+        });
+
+        if(program_ids.length===1){
+            window.open('/program/result?'+$.param(input));
+        }else{
+            window.open('/program/compare-result?'+$.param(input));
+        }
     });
 },false);
 
-function open_filter_box(param){
-    filters.filter_open[param]=filters.filter_open[param]===false?true:false;
+var win={};
+function onResize() {
+    win.w = $(window).width();
+    win.h = $(window).height();
 }
-//$(".filter-box  .filter-item-more").on("click", function (e) {
-//    e.preventDefault();
-//    var $fbox = $(this).parents(".filter-box");
-//    // console.log($fbox);
-//    if ($fbox.hasClass("open")) {
-//        $fbox.removeClass("open")
-//    } else {
-//        $fbox.addClass("open")
-//    }
-//});
+// 正常生成权重
+function make_regular_row(json) {
+    for (var i in json) {
+        var d = json[i];
 
+        var active='active';
+        var value=d.value;
+        var disabled='';
+        var no_use='';
 
+        if(value==''){
+            active='';
+            disabled='disabled';
+            value='0';
+            no_use='no-use';
+        }
+
+        $('#weights').append(
+            '<div class="pure-u-1-4">'
+            + '<div class="control-item '+disabled+'">'
+            + '<div class="control-label '+active+'"><span class="ico-checkbox">' + d.name + '</span></div>'
+            + '<div class="control-slider">'
+            + '<input class="bubble-slider '+no_use+'" name="' + d.html_id + '" placeholder="0 - 100" type="number" min="0" max="100" value="' + value + '">'
+            + '</div>'
+            + '</div>'
+            + '</div>'
+        );
+    }
+}
+// 获取剧目列表
+function get_program_list(){
+    var arg=arguments[0];
+    console.log(arg)
+
+    var p={}
+    for(var i in filter_data.selected){
+        p[i]=[];
+        var data=filter_data.selected[i];
+        for(var j in data){
+            if(data[j]==true){
+                p[i].push(j);
+            }
+        }
+    }
+
+    params.filters.platform_name= p.platforms.join(',');
+    params.filters.property_name= p.properties.join(',');
+    params.filters.type1= p.type1.join(',');
+    params.filters.type2= p.type2.join(',');
+    params.filters.start_play= p.times.join(',');
+
+    if(filter_data.name_type.program_name==true){
+        params.filters.program_name=filter_data.name_type.value;
+        params.filters.type_name='';
+    }else{
+        params.filters.type_name=filter_data.name_type.value;
+        params.filters.program_name='';
+    }
+
+    axios.get('/evaluation/list',{params:params}).then(function(json){
+        list_data.list=json.data.data;
+        list_data.total=json.data.total;
+        if(json.data.data.length==0){
+            $('#has-result').hide();
+            $('#no-result').show();
+        }else{
+            $('#has-result').show();
+            $('#no-result').hide();
+        }
+
+        if(arg.length>0){
+            for(var i in list_data.list){
+                if(arg.includes(list_data.list[i].program_id)){
+                    list_data.selected[list_data.list[i].program_id]=list_data.list[i].program_name;
+                }
+            }
+        }
+    });
+}
 
 function checkControlNum() {
     var tmpNum = 0;
@@ -423,21 +392,5 @@ function checkControlNum() {
         }
     });
     $("#controlBox .NUM").html(tmpNum + "%");
-}
-
-function checkResultArr() {
-    selectResultArr = [];
-    var tagHtml = "";
-    var tagID = 0;
-    $("#resultList .list-item").each(function (i, j) {
-        if ($(this).hasClass("active")) {
-            tagID = $(this).data("id");
-            selectResultArr.push(tagID);
-            tagHtml += '<span class="result-tag" data-id="' + tagID + '">' + $(this).find(".title").text() + '<a href="#" class="ico-close"></a></span>';
-        }
-    });
-    console.log(selectResultArr);
-
-    $("#resultTags").html(tagHtml);
 }
 
